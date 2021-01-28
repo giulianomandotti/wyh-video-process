@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RQapp home page</title>
+
+    <!--  VUE  -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
+    <!--  AXIOS  -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!--  BUEFY  -->
+    <!-- Buefy CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
+    <!-- Buefy JavaScript -->
+    <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+    <!--  FONTAWESOME  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css"
+          crossorigin="anonymous">
+    {% block header %}{% endblock %}
+</head>
+<body>
+{% block navigation %}{% endblock %}
+{% block content %}{% endblock %}
+{% block footer %}{% endblock %}
+</body>
+</html>
+

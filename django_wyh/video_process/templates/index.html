@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="app">
+    <b-navbar class="is-info">
+        <template slot="brand">
+            <b-navbar-item href="/">
+                <i class="fas">Wash Your Hands</i>
+            </b-navbar-item>
+        </template>
+    </b-navbar>
+    <div class="container">
+        <div position="is-centered" style="width: 10rem;margin-left: auto;margin-right: auto;">
+            <b-field label="Video ID">
+                <b-input placeholder="Video ID" type="number" v-model="videoId"></b-input>
+            </b-field>
+            <b-button type="is-success" @click="updateCall">
+                Update
+            </b-button>
+        </div>
+        <div>
+            <b-field v-for="k in Object.keys(plotData)" :label="k">
+                <progress class="progress is-success" :value="plotData[k]" :max="processed_frames"></progress>
+            </b-field>
+        </div>
+        <b-field label="Debug">
+            <p> Response: #{ message }</p>
+        </b-field>
+    </div>
+
+</div>
+
+<script>
+    app = new Vue({
+        el: "#app",
+        delimiters: ['#{', '}'],
+        data: {
+            videoId: 0,
+            message: 'body here',
+            plotData: {},
+            processed_frames: 0
+        }, methods: {
+            updateCall() {
+                var data = { video_id: this.videoId };
+                axios.defaults.xsrfCookieName = 'csrftoken';
+                axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+                axios.post(
+                    '/api/stats',
+                    data
+                ).then(
+                    (response) => {
+                        this.plotData = response.data
+                        this.processed_frames = response.data.processing_time
+                        this.message = `${response.status} ${response.statusText},\nprocessing seconds: ${this.processed_frames}`;
+                    }
+                ).catch(
+                    (error) => {
+                        this.message = error.message
+                    }
+                )
+            }
+        }
+    });
+
+</script>
+{% endblock %}
