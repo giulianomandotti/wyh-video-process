@@ -1,2 +1,3 @@
-web: gunicorn django_wyh.wsgi --log-file -
+redis: redis-server
+web: python manage.py runserver
 
